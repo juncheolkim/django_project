@@ -1,0 +1,9 @@
+{% if post_list %}
+    <ul>
+    {% for post in post_list %}
+        <li><a href="/pybo/{{ post.id }}/">{{ post.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
