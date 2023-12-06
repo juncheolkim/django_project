@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Post, Comment
 
-# Create your views here.
+
 def index(request):
-    return HttpResponse("게시판 페이지 입니다.")
+    post_list = Post.objects.order_by("-create_date")
+    context = {"post_list": post_list}
+    return render(request, "board/post_list.html", context)
