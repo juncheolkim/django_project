@@ -1,6 +1,6 @@
 <h1>{{ post.subject }}</h1>
 <div>{{ post.content }}</div>
-<h5>{{ post.comment_set.count }}개의 답변이 있습니다.</h5>
+<h5>{{ post.comment_set.count }}개의 댓글이 있습니다.</h5>
 <div>
   <ul>
     {% for comment in post.comment_set.all %}
