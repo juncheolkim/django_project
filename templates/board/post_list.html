@@ -25,6 +25,9 @@
             {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
         <td>
           <a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a>
+          {% if post.comment_set.count > 0 %}
+          <span class="text-danger small mx-2">{{ post.comment_set.count }}</span>
+          {% endif %}
         </td>
         <td>{{ post.create_date }}</td>
       </tr>
