@@ -126,3 +126,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# 로그인이 성공하면 django.contrib.auth 패키지는 디폴트로 /accounts/profile/ 이라는 URL로 이동시키기 때문에
+# 로그인 성공후 이동하는 URL을 설정
+LOGIN_REDIRECT_URL = '/'
+
+# 로그아웃시 이동하는 URL
+LOGOUT_REDIRECT_URL = '/'
