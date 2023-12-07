@@ -1,5 +1,5 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+{% extends 'base.html' %}
+{% block content %}
 <style>
     a {
         color: inherit;
@@ -34,3 +34,4 @@
         </tbody>
     </table>
 </div>
+{% endblock %}
