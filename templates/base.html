@@ -1,18 +1,29 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'bootstrap.min.css' %}"
+    />
     <!-- board CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
     <title>Hello, django project!</title>
-</head>
-<body>
-{% block content %}
-{% endblock %}
-</body>
+  </head>
+  <body>
+    <!-- 네비게이션바 -->
+    {% include "navbar.html" %}
+    {% block content %}
+    {% endblock %}
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+  </body>
 </html>
