@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 from ..models import Post, Comment
 from ..forms import CommentForm
@@ -19,7 +19,8 @@ def comment_create(request, post_id):
             comment.create_date = timezone.now()
             comment.post = post
             comment.save()
-            return redirect("board:detail", post_id=post.id)
+            return redirect('{}#comment_{}'.format(
+                resolve_url('board:detail', post_id=post.id), comment.id))
     else:
         return redirect("board:detail", post_id=post.id)
     context = {"post": post, "form": form}
@@ -38,7 +39,8 @@ def comment_modify(request, comment_id):
             comment = form.save(commit=False)
             comment.modify_date = timezone.now()
             comment.save()
-            return redirect("board:detail", post_id=comment.post.id)
+            return redirect('{}#comment_{}'.format(
+                resolve_url('board:detail', post_id=comment.post.id), comment.id))
     else:
         form = CommentForm(instance=comment)
     context = {"comment": comment, "form": form}
@@ -62,4 +64,5 @@ def comment_vote(request, comment_id):
         messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
     else:
         comment.voter.add(request.user)
-    return redirect('board:detail', post_id=comment.post.id)
+    return redirect('{}#comment_{}'.format(
+                resolve_url('board:detail', post_id=comment.post.id), comment.id))
