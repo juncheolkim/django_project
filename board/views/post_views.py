@@ -49,3 +49,15 @@ def post_delete(request, post_id):
         return redirect("board:detail", post_id=post.id)
     post.delete()
     return redirect("board:index")
+
+
+@login_required(login_url='common:login')
+def post_vote(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user == post.author:
+        messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
+    else:
+        # voter는 여러사람을 추가할 수 있는 ManyToManyField이므로 add 함수를 사용하여 추천인을 추가한다.
+        # 중복 추가는 ManyToManyField 내부에서 자체적으로 처리돼서 적용되지 않는다.
+        post.voter.add(request.user)
+    return redirect('board:detail', post_id=post.id)
