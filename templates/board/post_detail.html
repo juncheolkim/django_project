@@ -31,6 +31,10 @@
         </div>
       </div>
       <div class="my-3">
+        <a href="javascript:void(0)" data-uri="{% url 'board:post_vote' post.id  %}"
+        class="recommend btn btn-sm btn-outline-secondary"> 추천
+         <span class="badge rounded-pill bg-success">{{post.voter.count}}</span>
+        </a>
         {% if request.user == post.author %}
         <a
           href="{% url 'board:post_modify' post.id  %}"
@@ -70,6 +74,10 @@
         </div>
       </div>
       <div class="my-3">
+        <a href="javascript:void(0)" data-uri="{% url 'board:comment_vote' comment.id  %}"
+               class="recommend btn btn-sm btn-outline-secondary"> 추천
+                <span class="badge rounded-pill bg-success">{{comment.voter.count}}</span>
+        </a>
         {% if request.user == comment.author %}
         <a
           href="{% url 'board:comment_modify' comment.id  %}"
@@ -131,6 +139,14 @@
         location.href = this.dataset.uri;
       }
     });
+  });
+  const recommend_elements = document.getElementsByClassName("recommend");
+  Array.from(recommend_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          if(confirm("정말로 추천하시겠습니까?")) {
+              location.href = this.dataset.uri;
+          };
+      });
   });
 </script>
 {% endblock %}
