@@ -4,6 +4,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def index(request):
@@ -55,3 +56,61 @@ def post_create(request):
         form = PostForm()
     context = {"form": form}
     return render(request, "board/post_form.html", context)
+
+
+@login_required(login_url="common:login")
+def post_modify(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, "수정권한이 없습니다")
+        return redirect("board:detail", post_id=post.id)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.modify_date = timezone.now()  # 수정일시 저장
+            post.save()
+            return redirect("board:detail", post_id=post.id)
+    else:
+        form = PostForm(instance=post)
+    context = {"form": form}
+    return render(request, "board/post_form.html", context)
+
+
+@login_required(login_url="common:login")
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, "삭제권한이 없습니다")
+        return redirect("board:detail", post_id=post.id)
+    post.delete()
+    return redirect("board:index")
+
+
+@login_required(login_url="common:login")
+def comment_modify(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user != comment.author:
+        messages.error(request, "수정권한이 없습니다")
+        return redirect("board:detail", post_id=comment.post.id)
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.modify_date = timezone.now()
+            comment.save()
+            return redirect("board:detail", post_id=comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+    context = {"comment": comment, "form": form}
+    return render(request, "board/comment_form.html", context)
+
+
+@login_required(login_url='common:login')
+def comment_delete(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user != comment.author:
+        messages.error(request, '삭제권한이 없습니다')
+    else:
+        comment.delete()
+    return redirect('board:detail', post_id=comment.post.id)
