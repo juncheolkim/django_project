@@ -56,6 +56,7 @@
     {{post.comment_set.count}}개의 댓글이 있습니다.
   </h5>
   {% for comment in post.comment_set.all %}
+  <a id="comment_{{ comment.id }}"></a>
   <div class="card my-3">
     <div class="card-body">
       <div class="card-text" style="white-space: pre-line">
