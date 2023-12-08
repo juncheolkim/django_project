@@ -30,21 +30,21 @@
           <div>{{ post.create_date }}</div>
         </div>
       </div>
-    </div>
-    <div class="my-3">
-      {% if request.user == post.author %}
-      <a
-        href="{% url 'board:post_modify' post.id  %}"
-        class="btn btn-sm btn-outline-secondary"
-        >수정</a
-      >
-      <a
-        href="javascript:void(0)"
-        class="delete btn btn-sm btn-outline-secondary"
-        data-uri="{% url 'board:post_delete' post.id  %}"
-        >삭제</a
-      >
-      {% endif %}
+      <div class="my-3">
+        {% if request.user == post.author %}
+        <a
+          href="{% url 'board:post_modify' post.id  %}"
+          class="btn btn-sm btn-outline-secondary"
+          >수정</a
+        >
+        <a
+          href="javascript:void(0)"
+          class="delete btn btn-sm btn-outline-secondary"
+          data-uri="{% url 'board:post_delete' post.id  %}"
+          >삭제</a
+        >
+        {% endif %}
+      </div>
     </div>
   </div>
   <!-- 댓글 -->
@@ -65,8 +65,8 @@
         </div>
         {% endif %}
         <div class="badge bg-light text-dark p-2 text-start">
-            <div class="mb-2">{{ comment.author.username }}</div>
-            <div>{{ comment.create_date }}</div>
+          <div class="mb-2">{{ comment.author.username }}</div>
+          <div>{{ comment.create_date }}</div>
         </div>
       </div>
       <div class="my-3">
