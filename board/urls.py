@@ -20,6 +20,7 @@ urlpatterns = [
         post_views.post_delete,
         name="post_delete",
     ),
+    path('post/vote/<int:post_id>/', post_views.post_vote, name='post_vote'),
     # comment_views.py
     path(
         "comment/create/<int:post_id>/",
@@ -36,4 +37,5 @@ urlpatterns = [
         comment_views.comment_delete,
         name="comment_delete",
     ),
+    path('comment/vote/<int:comment_id>/', comment_views.comment_vote, name='comment_vote'),
 ]
