@@ -53,3 +53,13 @@ def comment_delete(request, comment_id):
     else:
         comment.delete()
     return redirect("board:detail", post_id=comment.post.id)
+
+
+@login_required(login_url='common:login')
+def comment_vote(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user == comment.author:
+        messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
+    else:
+        comment.voter.add(request.user)
+    return redirect('board:detail', post_id=comment.post.id)
